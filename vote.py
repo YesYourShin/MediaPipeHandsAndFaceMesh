@@ -70,7 +70,7 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
                 mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
         
         # 웹캠에서 피드를 읽은 다음 해당 결과를 화면에 렌더링하여 프레임에 원하는 이름을 지정함
-        cv2.imshow('MediaPipe Hands', image)
+        cv2.imshow('Vote', image)
         
         # 루프에서 벗어날지 여부
         # 'q'를 눌러서 프레임을 종료할 수 있음
