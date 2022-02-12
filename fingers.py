@@ -37,91 +37,92 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
         #??
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         
-        n = 0
+        right_hand_keypoints = []
+        left_hand_keypoints = []
+        right_fingers_status = {'RIGHT_THUMB': False, 'RIGHT_INDEX_FINGER': False, 'RIGHT_MIDDLE_FINGER': False, 'RIGHT_RING_FINGER': False, 'RIGHT_PINKY': False}
+        left_fingers_status = {'LEFT_THUMB': False, 'LEFT_INDEX_FINGER': False, 'LEFT_MIDDLE_FINGER': False, 'LEFT_RING_FINGER': False, 'LEFT_PINKY': False}
         # 화면에 손 랜드마크가 찍히면
         if results.multi_hand_landmarks:
+            n = 0
             for hand_landmarks in results.multi_hand_landmarks:
-                keypoints = []
-                for data_point in hand_landmarks.landmark:
-                    keypoints.append({
-                                        'X': data_point.x,
-                                        'Y': data_point.y,
-                                        })
-
-                right_hand = {'RIGHT_THUMB': False, 'RIGHT_INDEX_FINGER': False, 'RIGHT_MIDDLE_FINGER': False, 'RIGHT_RING_FINGER': False, 'RIGHT_PINKY': False}
-                left_hand = {'LEFT_THUMB': False, 'LEFT_INDEX_FINGER': False, 'LEFT_MIDDLE_FINGER': False, 'LEFT_RING_FINGER': False, 'LEFT_PINKY': False}
-                
-                for handed in results.multi_handedness:
-
-                    # 오른손일 때
-                    if handed.classification[0].label == "Right":
+                if results.multi_handedness:
+                    if results.multi_handedness[n].classification[0].label == 'Right':
+                        for data_point in hand_landmarks.landmark:
+                            right_hand_keypoints.append({
+                                                'X': data_point.x,
+                                                'Y': data_point.y,
+                                                })
                         #엄지 4번(x)가 새끼손가락 17번(x)보다 왼쪽에 있을 때(손 바닥면)
-                        if keypoints[4]['X'] < keypoints[17]['X']:
+                        if right_hand_keypoints[4]['X'] < right_hand_keypoints[17]['X']:
                             # 중지 10번(x)과 검지 6번(x)의 차가 검지 6번(x)와 엄지 4번(x)의 차보다 작거나 엄지 4번(x)가 엄지 2번 x보다 왼쪽에 있을 경우
-                            if (keypoints[10]["X"] - keypoints[6]["X"]) < (keypoints[6]["X"] - keypoints[4]["X"]) and keypoints[4]["X"] < keypoints[2]["X"]:
-                                right_hand["RIGHT_THUMB"] = True
+                            if (right_hand_keypoints[10]["X"] - right_hand_keypoints[6]["X"]) < (right_hand_keypoints[6]["X"] - right_hand_keypoints[4]["X"]) and right_hand_keypoints[4]["X"] < right_hand_keypoints[2]["X"]:
+                                right_fingers_status["RIGHT_THUMB"] = True
                         # 엄지 4번(x)가 새끼손가락 17번(x)보다 오른쪽에 있을 때(손 등면)
-                        elif keypoints[17]['X'] < keypoints[4]['X']:
+                        elif right_hand_keypoints[17]['X'] < right_hand_keypoints[4]['X']:
                             #엄지 4번(x)가 엄지 2번(x)보다 오른쪽에 있을 때
-                            if keypoints[4]["X"] > keypoints[2]["X"]:
-                                right_hand["RIGHT_THUMB"] = True
+                            if right_hand_keypoints[4]["X"] > right_hand_keypoints[2]["X"]:
+                                right_fingers_status["RIGHT_THUMB"] = True
                         
                         # 나머지 손가락 4개의 맨 위(y)가 한 개 아래의 관절(y)보다 높을 경우
-                        if keypoints[8]['Y'] < keypoints[6]['Y']:
-                            right_hand["RIGHT_INDEX_FINGER"] = True
-                        if keypoints[12]['Y'] < keypoints[10]['Y']:
-                            right_hand["RIGHT_MIDDLE_FINGER"] = True
-                        if keypoints[16]['Y'] < keypoints[14]['Y']:
-                            right_hand["RIGHT_RING_FINGER"] = True
-                        if keypoints[20]['Y'] < keypoints[18]['Y']:
-                            right_hand["RIGHT_PINKY"] = True
-                    
-                    # 왼손일 때
-                    if handed.classification[0].label == "Left":
+                        if right_hand_keypoints[8]['Y'] < right_hand_keypoints[6]['Y']:
+                            right_fingers_status["RIGHT_INDEX_FINGER"] = True
+                        if right_hand_keypoints[12]['Y'] < right_hand_keypoints[10]['Y']:
+                            right_fingers_status["RIGHT_MIDDLE_FINGER"] = True
+                        if right_hand_keypoints[16]['Y'] < right_hand_keypoints[14]['Y']:
+                            right_fingers_status["RIGHT_RING_FINGER"] = True
+                        if right_hand_keypoints[20]['Y'] < right_hand_keypoints[18]['Y']:
+                            right_fingers_status["RIGHT_PINKY"] = True
+
+                        mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+                    if results.multi_handedness[n].classification[0].label == 'Left':
+                        for data_point in hand_landmarks.landmark:
+                            left_hand_keypoints.append({
+                                                'X': data_point.x,
+                                                'Y': data_point.y,
+                                                })
                         #엄지 4번(x)가 새끼손가락 17번(x)보다 오른쪽에 있을 때(손 바닥면)
-                        if keypoints[17]['X'] < keypoints[4]['X']:
+                        if left_hand_keypoints[17]['X'] < left_hand_keypoints[4]['X']:
                             # 검지 6번(x)과 중지 10번(x)의 차가 엄지 4번(x)와 검지 6번(x)의 차보다 작거나 엄지 4번(x)가 엄지 2번 x보다 오른쪽에 있을 경우
-                            if (keypoints[6]["X"] - keypoints[10]["X"]) < (keypoints[4]["X"] - keypoints[6]["X"]) and keypoints[4]["X"] > keypoints[2]["X"]:
-                                left_hand["LEFT_THUMB"] = True
+                            if (left_hand_keypoints[6]["X"] - left_hand_keypoints[10]["X"]) < (left_hand_keypoints[4]["X"] - left_hand_keypoints[6]["X"]) and left_hand_keypoints[4]["X"] > left_hand_keypoints[2]["X"]:
+                                left_fingers_status["LEFT_THUMB"] = True
                         # 엄지 4번(x)가 새끼손가락 17번(x)보다 왼쪽에 있을 때(손 등면)
-                        elif keypoints[17]['X'] > keypoints[4]['X']:
+                        elif left_hand_keypoints[17]['X'] > left_hand_keypoints[4]['X']:
                             #엄지 4번(x)가 엄지 2번(x)보다 왼쪽에 있을 때
-                            if keypoints[4]["X"] < keypoints[2]["X"]:
-                                left_hand["LEFT_THUMB"] = True
+                            if left_hand_keypoints[4]["X"] < left_hand_keypoints[2]["X"]:
+                                left_fingers_status["LEFT_THUMB"] = True
 
                         # 나머지 손가락 4개의 맨 위(y)가 한 개 아래의 관절(y)보다 높을 경우
-                        if keypoints[8]['Y'] < keypoints[6]['Y']:
-                            left_hand["LEFT_INDEX_FINGER"] = True
-                        if keypoints[12]['Y'] < keypoints[10]['Y']:
-                            left_hand["LEFT_MIDDLE_FINGER"] = True
-                        if keypoints[16]['Y'] < keypoints[14]['Y']:
-                            left_hand["LEFT_RING_FINGER"] = True
-                        if keypoints[20]['Y'] < keypoints[18]['Y']:
-                            left_hand["LEFT_PINKY"] = True
+                        if left_hand_keypoints[8]['Y'] < left_hand_keypoints[6]['Y']:
+                            left_fingers_status["LEFT_INDEX_FINGER"] = True
+                        if left_hand_keypoints[12]['Y'] < left_hand_keypoints[10]['Y']:
+                            left_fingers_status["LEFT_MIDDLE_FINGER"] = True
+                        if left_hand_keypoints[16]['Y'] < left_hand_keypoints[14]['Y']:
+                            left_fingers_status["LEFT_RING_FINGER"] = True
+                        if left_hand_keypoints[20]['Y'] < left_hand_keypoints[18]['Y']:
+                            left_fingers_status["LEFT_PINKY"] = True
                             
-                right_fingers = 0
-                for fingers in right_hand.values():
-                    if fingers == True:
-                        right_fingers += 1 
+                        mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+                    
+                    n += 1
                             
-                left_fingers = 0
-                for fingers in left_hand.values():
-                    if fingers == True:
-                        left_fingers += 1 
+        right_fingers_count = 0
+        for fingers in right_fingers_status.values():
+            if fingers == True:
+                right_fingers_count += 1 
+                    
+        left_fingers_count = 0
+        for fingers in left_fingers_status.values():
+            if fingers == True:
+                left_fingers_count += 1 
 
-                total_fingers = right_fingers + left_fingers
+        total_fingers = right_fingers_count + left_fingers_count
 
                 # print('right_fingers: ', right_fingers)
                 # print('left_fingers: ', left_fingers)
                 
-                cv2.putText(image, str(total_fingers), (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
+        cv2.putText(image, str(total_fingers), (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
 
-                # a = 0
-                # a = str(thumbIsOpen+firstFingerIsOpen+secondFingerIsOpen+thirdFingerIsOpen+fourFingerIsOpen)
-                # cv2.putText(image, a, (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
-
-
-                mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
         
         # 웹캠에서 피드를 읽은 다음 해당 결과를 화면에 렌더링하여 프레임에 원하는 이름을 지정함
         cv2.imshow('Fingers Count', image)
