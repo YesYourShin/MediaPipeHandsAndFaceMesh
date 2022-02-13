@@ -1,5 +1,7 @@
 import cv2
 import mediapipe as mp
+from PIL import ImageFont, ImageDraw, Image
+import numpy as np
 
 # opencv에 대한 다양한 감지를 그리는데에 도움이 되는 유틸리티
 mp_drawing = mp.solutions.drawing_utils
@@ -27,14 +29,13 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
         # 해당 이미지의 색상이 rgb로 표시되기를 원하므로 다시 채색을 수행해 변환된 이미지를 가져와서
         # 모델에 전달하여 프로세스를 작성하여 특정 이미지를 처리함
         # 이 모델 프로세스를 얻은 다음 그 결과를 표시할 수 있도록 이미지를 처리함
+        # flip은 좌우나 상하를 반전시킴. 1은 좌우반전.
         image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
-        #??
+
         image.flags.writeable = False
         results = hands.process(image)
 
-        #??
         image.flags.writeable = True
-        #??
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         
         right_hand_keypoints = []
@@ -106,28 +107,44 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
 
                 #화면에 손 관절 그리기
                 mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-                    
-        right_fingers_count = 0
-        for fingers in right_fingers_status.values():
-            if fingers == True:
-                right_fingers_count += 1 
-                    
-        left_fingers_count = 0
-        for fingers in left_fingers_status.values():
-            if fingers == True:
-                left_fingers_count += 1 
-
-        total_fingers = right_fingers_count + left_fingers_count
-
-                
-        cv2.putText(image, str(total_fingers), (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
-
         
-        # 웹캠에서 피드를 읽은 다음 해당 결과를 화면에 렌더링하여 프레임에 원하는 이름을 지정함
+        # 한글 띄우기
+        image = Image.fromarray(image)
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype("fonts/gulim.ttc", 40)
+        org=(50, 50)
+
+        hand = right_hand_keypoints or left_hand_keypoints
+
+        if hand:
+            if hand[0]['Y'] < hand[1]['Y'] or hand[17]['Y'] > hand[2]['Y']:
+                draw.text(org, text="손을 정확하게 인식시켜주세요", font = font, fill=(255, 255, 255))
+
+            else:
+                right_fingers_count = 0
+                for fingers in right_fingers_status.values():
+                    if fingers == True:
+                        right_fingers_count += 1 
+                            
+                left_fingers_count = 0
+                for fingers in left_fingers_status.values():
+                    if fingers == True:
+                        left_fingers_count += 1 
+
+                total_fingers = right_fingers_count + left_fingers_count
+
+                draw.text(org, str(total_fingers), font = font, fill=(255, 255, 255))
+            
+        else:
+            draw.text(org, text="손을 인식시켜주세요", font = font, fill=(255, 255, 255))
+
+        image = np.array(image)
+
+        # 창의 이름과 출력할 이미지
         cv2.imshow('Fingers Count', image)
         
-        # 루프에서 벗어날지 여부
-        # 'q'를 눌러서 프레임을 종료할 수 있음
+        # 키보드 입력을 처리함
+        # ESC를 눌러 나갈 수 있음
         if cv2.waitKey(5) & 0xFF == 27:
             break
 

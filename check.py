@@ -27,14 +27,13 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
         # 해당 이미지의 색상이 rgb로 표시되기를 원하므로 다시 채색을 수행해 변환된 이미지를 가져와서
         # 모델에 전달하여 프로세스를 작성하여 특정 이미지를 처리함
         # 이 모델 프로세스를 얻은 다음 그 결과를 표시할 수 있도록 이미지를 처리함
+        # flip은 좌우나 상하를 반전시킴. 1은 좌우반전.
         image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
-        #??
+
         image.flags.writeable = False
         results = hands.process(image)
 
-        #??
         image.flags.writeable = True
-        #??
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
         right_hand = []
@@ -69,12 +68,11 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
             if right_hand[9]['X'] < left_hand[9]['X']:
                     cv2.putText(image, 'no', (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
 
-
-        # 웹캠에서 피드를 읽은 다음 해당 결과를 화면에 렌더링하여 프레임에 원하는 이름을 지정함
+        # 창의 이름과 출력할 이미지
         cv2.imshow('Check', image)
         
-        # 루프에서 벗어날지 여부
-        # 'q'를 눌러서 프레임을 종료할 수 있음
+        # 키보드 입력을 처리함
+        # ESC를 눌러 나갈 수 있음
         if cv2.waitKey(5) & 0xFF == 27:
             break
 
