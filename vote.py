@@ -1,5 +1,7 @@
 import cv2
 import mediapipe as mp
+from PIL import ImageFont, ImageDraw, Image
+import numpy as np
 
 # opencv에 대한 다양한 감지를 그리는데에 도움이 되는 유틸리티
 mp_drawing = mp.solutions.drawing_utils
@@ -64,11 +66,19 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
 
         text = ""
         if kill == True:
-            text = "agree"
+            text = "찬성"
         elif safe == True:
-            text = "opposite"
+            text = "반대"
 
-        cv2.putText(image, text, (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
+        # 한글 띄우기
+        image = Image.fromarray(image)
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype("fonts/gulim.ttc", 40)
+        
+        draw.text((50, 50), "죽이겠습니까?", font = font, fill=(255, 255, 255))
+        draw.text((50, 100), text, font = font, fill=(255, 255, 255))
+
+        image = np.array(image)
 
         # 창의 이름과 출력할 이미지
         cv2.imshow('Vote', image)
