@@ -36,38 +36,42 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
         image.flags.writeable = True
         #??
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        
-        n = 0
+
+        keypoints = []
+
         # 화면에 손 랜드마크가 찍히면
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
-                keypoints = []
+                
                 for data_point in hand_landmarks.landmark:
                     keypoints.append({
                                         'X': data_point.x,
                                         'Y': data_point.y,
                                         })
-                safe = False
-                kill = False
-                
-                for handed in results.multi_handedness:
-
-                    #엄지 4번(y)가 검지 5번(y)보다 위에 있을 때
-                    if keypoints[4]['Y'] < keypoints[17]['Y']:
-                        kill = True
-
-                    #엄지 4번(y)가 손목 0번(y)보다 아래에 있을 때
-                    if keypoints[4]['Y'] > keypoints[17]['Y']:
-                        safe = True
-
-                text = ""
-                if kill == True:
-                    text = "agree"
-                elif safe == True:
-                    text = "opposite"
-                cv2.putText(image, text, (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
 
                 mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+        safe = False
+        kill = False
+
+        if keypoints:
+            #엄지 4번(y)가 검지 5번(y)보다 위에 있을 때
+            if keypoints[4]['Y'] < keypoints[17]['Y']:
+                kill = True
+
+            #엄지 4번(y)가 손목 0번(y)보다 아래에 있을 때
+            if keypoints[4]['Y'] > keypoints[17]['Y']:
+                safe = True
+
+        text = ""
+        if kill == True:
+            text = "agree"
+        elif safe == True:
+            text = "opposite"
+
+        cv2.putText(image, text, (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
+
+        
         
         # 웹캠에서 피드를 읽은 다음 해당 결과를 화면에 렌더링하여 프레임에 원하는 이름을 지정함
         cv2.imshow('Vote', image)
