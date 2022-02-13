@@ -102,7 +102,9 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
                             left_fingers_status["LEFT_RING_FINGER"] = True
                         if left_hand_keypoints[20]['Y'] < left_hand_keypoints[18]['Y']:
                             left_fingers_status["LEFT_PINKY"] = True
-                    n += 1        
+                    n += 1
+
+                #화면에 손 관절 그리기
                 mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     
         right_fingers_count = 0
