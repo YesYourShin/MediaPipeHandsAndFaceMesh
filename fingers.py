@@ -138,8 +138,6 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
                     draw.text((50, 100), "0번은 없습니다.", font = font, fill=(255, 255, 255))
                 else:
                     draw.text((50, 100), str(total_fingers) + "번", font = font, fill=(255, 255, 255))
-        else:
-            draw.text((50, 100), "무투표", font = font, fill=(255, 255, 255))
             
         image = np.array(image)
 
