@@ -67,7 +67,6 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
         image = Image.fromarray(image)
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype("fonts/gulim.ttc", 40)
-        org=(50, 50)
 
         draw.text((50, 50), text="n번에게 투표하시겠습니까?", font = font, fill=(255, 255, 255))
 
