@@ -64,7 +64,7 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
                         mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     n += 1
         if right_hand and left_hand:
-            if right_hand[9]['X'] - left_hand[9]['X'] < 0.5 and right_hand[9]['X'] > left_hand[9]['X']:
+            if right_hand[9]['X'] > left_hand[9]['X']:
                     cv2.putText(image, 'yes', (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
 
             if right_hand[9]['X'] < left_hand[9]['X']:
