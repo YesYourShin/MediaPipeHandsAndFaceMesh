@@ -1,5 +1,7 @@
 import cv2
 import mediapipe as mp
+from PIL import ImageFont, ImageDraw, Image
+import numpy as np
 
 # opencv에 대한 다양한 감지를 그리는데에 도움이 되는 유틸리티
 mp_drawing = mp.solutions.drawing_utils
@@ -61,12 +63,22 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
                 #손 관절 그리기
                 mp_drawing.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
                     
+        # 한글 띄우기
+        image = Image.fromarray(image)
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype("fonts/gulim.ttc", 40)
+        org=(50, 50)
+
+        draw.text((50, 50), text="n번에게 투표하시겠습니까?", font = font, fill=(255, 255, 255))
+
         if right_hand and left_hand:
             if right_hand[9]['X'] > left_hand[9]['X']:
-                    cv2.putText(image, 'yes', (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
+                    draw.text((50, 100), text="네", font = font, fill=(255, 255, 255))
 
             if right_hand[9]['X'] < left_hand[9]['X']:
-                    cv2.putText(image, 'no', (100, 100), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 2, (0, 255, 0), 2)
+                    draw.text((50, 100), text="아니요", font = font, fill=(255, 255, 255))
+
+        image = np.array(image)
 
         # 창의 이름과 출력할 이미지
         cv2.imshow('Check', image)
