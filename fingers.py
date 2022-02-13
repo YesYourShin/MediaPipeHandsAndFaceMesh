@@ -118,15 +118,16 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
 
         if hand:
             if hand[0]['Y'] < hand[1]['Y'] or hand[17]['Y'] > hand[2]['Y']:
-                draw.text(org, text="손을 정확하게 인식시켜주세요", font = font, fill=(255, 255, 255))
+                draw.text(org, text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
 
             else:
                 right_fingers_count = 0
+                left_fingers_count = 0
+
                 for fingers in right_fingers_status.values():
                     if fingers == True:
                         right_fingers_count += 1 
-                            
-                left_fingers_count = 0
+
                 for fingers in left_fingers_status.values():
                     if fingers == True:
                         left_fingers_count += 1 
@@ -136,7 +137,7 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
                 draw.text(org, str(total_fingers), font = font, fill=(255, 255, 255))
             
         else:
-            draw.text(org, text="손을 인식시켜주세요", font = font, fill=(255, 255, 255))
+            draw.text(org, text="손을 인식시켜주세요.", font = font, fill=(255, 255, 255))
 
         image = np.array(image)
 
