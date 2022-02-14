@@ -69,6 +69,8 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
             text = "찬성"
         elif safe == True:
             text = "반대"
+        if keypoints and kill == False and safe == False:
+            text = "손을 정확하게 인식시켜 주세요."
 
         # 한글 띄우기
         image = Image.fromarray(image)
