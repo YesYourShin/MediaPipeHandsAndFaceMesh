@@ -57,11 +57,11 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
 
         if keypoints:
             #엄지 4번(y)가 검지 5번(y)보다 위에 있을 때
-            if keypoints[4]['Y'] < keypoints[17]['Y']:
+            if keypoints[4]['Y'] < keypoints[17]['Y'] and keypoints[4]['Y'] < keypoints[3]['Y']:
                 kill = True
 
             #엄지 4번(y)가 손목 0번(y)보다 아래에 있을 때
-            if keypoints[4]['Y'] > keypoints[17]['Y']:
+            if keypoints[4]['Y'] > keypoints[17]['Y'] and keypoints[4]['Y'] > keypoints[3]['Y']:
                 safe = True
 
         text = ""
