@@ -117,48 +117,36 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
 
         draw.text((50, 50), text="몇 번을 지목하겠습니까?", font = font, fill=(255, 255, 255))
 
-        if hand:
-            # if hand[0]['Y'] < hand[1]['Y'] or hand[17]['Y'] > hand[2]['Y']:
-            #     draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
+        right_hand = True
+        left_hand = True
 
-            # if right_hand_keypoints:
-            #     if right_hand_keypoints[0]['Y'] < right_hand_keypoints[1]['Y'] or right_hand_keypoints[17]['Y'] > right_hand_keypoints[2]['Y']:
-            #         draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
+        if right_hand_keypoints:
+            if right_hand_keypoints[0]['Y'] < right_hand_keypoints[1]['Y'] or (right_hand_keypoints[0]['Y'] - right_hand_keypoints[5]['Y'])/2 > right_hand_keypoints[0]['Y'] - right_hand_keypoints[17]['Y']:
+                right_hand = False
+                draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
 
-            # if left_hand_keypoints:
-            #     if left_hand_keypoints[0]['Y'] < left_hand_keypoints[1]['Y'] or left_hand_keypoints[17]['Y'] > left_hand_keypoints[2]['Y']:
-            #         draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
+        if left_hand_keypoints:
+            if left_hand_keypoints[0]['Y'] < left_hand_keypoints[1]['Y'] or (left_hand_keypoints[0]['Y'] - left_hand_keypoints[5]['Y'])/2 > left_hand_keypoints[0]['Y'] - left_hand_keypoints[17]['Y']:
+                left_hand = False
+                draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
 
-            right_hand = True
-            left_hand = True
+        if right_hand and left_hand:
+            right_fingers_count = 0
+            left_fingers_count = 0
 
-            if right_hand_keypoints:
-                if right_hand_keypoints[0]['Y'] < right_hand_keypoints[1]['Y'] or right_hand_keypoints[17]['Y'] > right_hand_keypoints[2]['Y']:
-                    right_hand = False
-                    draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
+            for fingers in right_fingers_status.values():
+                if fingers == True:
+                    right_fingers_count += 1 
 
-            if left_hand_keypoints:
-                if left_hand_keypoints[0]['Y'] < left_hand_keypoints[1]['Y'] or left_hand_keypoints[17]['Y'] > left_hand_keypoints[2]['Y']:
-                    left_hand = False
-                    draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
+            for fingers in left_fingers_status.values():
+                if fingers == True:
+                    left_fingers_count += 1 
 
-            if right_hand and left_hand:
-                right_fingers_count = 0
-                left_fingers_count = 0
-
-                for fingers in right_fingers_status.values():
-                    if fingers == True:
-                        right_fingers_count += 1 
-
-                for fingers in left_fingers_status.values():
-                    if fingers == True:
-                        left_fingers_count += 1 
-
-                total_fingers = right_fingers_count + left_fingers_count
-                if total_fingers == 0:
-                    draw.text((50, 100), "0번은 없습니다.", font = font, fill=(255, 255, 255))
-                else:
-                    draw.text((50, 100), str(total_fingers) + "번", font = font, fill=(255, 255, 255))
+            total_fingers = right_fingers_count + left_fingers_count
+            if total_fingers == 0:
+                draw.text((50, 100), "0번은 없습니다.", font = font, fill=(255, 255, 255))
+            else:
+                draw.text((50, 100), str(total_fingers) + "번", font = font, fill=(255, 255, 255))
             
         image = np.array(image)
 
