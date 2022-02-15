@@ -71,10 +71,10 @@ with mp_hands.Hands(min_detection_confidence=0.5,min_tracking_confidence=0.5, ma
         draw.text((50, 50), text="n번에게 투표하시겠습니까?", font = font, fill=(255, 255, 255))
 
         if right_hand and left_hand:
-            if right_hand[9]['X'] > left_hand[9]['X'] and right_hand[12]['Y'] < right_hand[0]['Y'] and left_hand[12]['Y'] < left_hand[0]['Y']:
+            if right_hand[9]['X'] > left_hand[9]['X'] and right_hand[12]['Y'] < right_hand[0]['Y'] and left_hand[12]['Y'] < left_hand[0]['Y'] and right_hand[5]['X'] < right_hand[0]['X'] and left_hand[5]['X'] > left_hand[0]['X']:
                     draw.text((50, 100), text="네", font = font, fill=(255, 255, 255))
 
-            if right_hand[9]['X'] < left_hand[9]['X'] and right_hand[12]['Y'] < right_hand[0]['Y'] and left_hand[12]['Y'] < left_hand[0]['Y']:
+            if right_hand[9]['X'] < left_hand[9]['X'] and right_hand[12]['Y'] < right_hand[0]['Y'] and left_hand[12]['Y'] < left_hand[0]['Y'] and right_hand[9]['X'] < right_hand[0]['X'] and left_hand[9]['X'] > left_hand[0]['X']:
                     draw.text((50, 100), text="아니요", font = font, fill=(255, 255, 255))
 
         image = np.array(image)
