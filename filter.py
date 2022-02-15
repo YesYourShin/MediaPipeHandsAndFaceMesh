@@ -6,7 +6,7 @@ cap = cv2.VideoCapture(0)
 
 mafia_hat_img = cv2.imread('mediapipe/pig_nose.jpeg') # (860, 563) w,h ratio=563/860=0.65
 
-mafia_hat_landmarks = [298, 68] # 5 = center nose point
+mafia_hat_landmarks = [389, 162] # 5 = center nose point
 
 # total 468 landmarks
 mp_drawing = mp.solutions.drawing_utils
