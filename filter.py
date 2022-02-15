@@ -4,9 +4,9 @@ from math import hypot
 
 cap = cv2.VideoCapture(0)
 
-nose_img = cv2.imread('mediapipe/pig_nose.jpeg') # (860, 563) w,h ratio=563/860=0.65
+mafia_hat_img = cv2.imread('mediapipe/pig_nose.jpeg') # (860, 563) w,h ratio=563/860=0.65
 
-nose_landmarks = [49,279,197,2,5] # 5 = center nose point
+mafia_hat_landmarks = [298, 68] # 5 = center nose point
 
 # total 468 landmarks
 mp_drawing = mp.solutions.drawing_utils
@@ -33,6 +33,7 @@ with mp_face_mesh.FaceMesh(
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
         if results.multi_face_landmarks:
+            
             for face_landmarks in results.multi_face_landmarks:
                 # 랜드마크 그리기
                 mp_drawing.draw_landmarks(
@@ -57,67 +58,79 @@ with mp_face_mesh.FaceMesh(
                     connection_drawing_spec=mp_drawing_styles
                     .get_default_face_mesh_iris_connections_style())
 
-                # nose landmarks
-                leftnosex = 0
-                lefttnosey = 0
-                rightnosex = 0
-                rightnosey = 0
-                centernosex = 0
-                centernosey = 0
+                # # nose landmarks
+                # leftnosex = 0
+                # lefttnosey = 0
+                # rightnosex = 0
+                # rightnosey = 0
+                # centernosex = 0
+                # centernosey = 0
                 
-                # get each landmark info
+                # head landmarks
+                right_head_x = 0
+                right_head_y = 0
+                left_head_x = 0
+                left_head_y = 0
+
+                # 랜드마크의 정보를 받아옴
                 for lm_id, lm in enumerate(face_landmarks.landmark):
-                    
-                    # getting original value
+
+                    # 해당 랜드마크의 비디오 화면 상 위치 값
                     h, w, c = image.shape
                     x, y = int(lm.x * w), int(lm.y * h)
+
+                    # # calculating nose width
+                    # if lm_id == nose_landmarks[0]:
+                    #     leftnosex, lefttnosey = x, y
+                    # if lm_id == nose_landmarks[1]:
+                    #     rightnosex, rightnosey = x, y
+                    # if lm_id == nose_landmarks[4]:
+                    #     centernosex, centernosey = x, y
+
+                    # calculating hat width
+                    if lm_id == mafia_hat_landmarks[0]:
+                        right_head_x, right_head_y = x, y
+                    if lm_id == mafia_hat_landmarks[1]:
+                        left_head_x, left_head_y = x, y
+
+                    #display only mafia hat landmarks
+                    if lm_id in mafia_hat_landmarks:
+                        cv2.putText(
+                            image,
+                            str(lm_id),
+                            (x, y), 
+                            cv2.FONT_HERSHEY_SIMPLEX, 
+                            0.3, 
+                            (0,0,255),
+                            1
+                        )
                     
-                    # calculating nose width
-                    if lm_id == nose_landmarks[0]:
-                        leftnosex, lefttnosey = x, y
-                    if lm_id == nose_landmarks[1]:
-                        rightnosex, rightnosey = x, y
-                    if lm_id == nose_landmarks[4]:
-                        centernosex, centernosey = x, y
+                # nose_width = int(hypot(leftnosex-rightnosex, lefttnosey-rightnosey*1.2))
+                # nose_height = int(nose_width*0.77)
 
-                    # display only nose landmarks
-                    # if lm_id in nose_landmarks:
-                    #     cv2.putText(
-                    #         frame,
-                    #         str(lm_id),
-                    #         (x, y), 
-                    #         cv2.FONT_HERSHEY_SIMPLEX, 
-                    #         0.3, 
-                    #         (0,0,255),
-                    #         1
-                    #     )
-                    
-                nose_width = int(hypot(leftnosex-rightnosex, lefttnosey-rightnosey*1.2))
-                nose_height = int(nose_width*0.77)
+                # if (nose_width and nose_height) != 0:
+                #     pig_nose = cv2.resize(nose_img, (nose_width, nose_height))
 
-                if (nose_width and nose_height) != 0:
-                    pig_nose = cv2.resize(nose_img, (nose_width, nose_height))
+                # top_left = (int(centernosex-nose_width/2),int(centernosey-nose_height/2))
+                # bottom_right = (int(centernosex+nose_width/2),int(centernosey+nose_height/2))
 
-                top_left = (int(centernosex-nose_width/2),int(centernosey-nose_height/2))
-                bottom_right = (int(centernosex+nose_width/2),int(centernosey+nose_height/2))
+                # nose_area = image[
+                #     top_left[1]: top_left[1]+nose_height,
+                #     top_left[0]: top_left[0]+nose_width
+                # ]
 
-                nose_area = image[
-                    top_left[1]: top_left[1]+nose_height,
-                    top_left[0]: top_left[0]+nose_width
-                ]
-
-                # creating nose mask
-                pig_nose_gray = cv2.cvtColor(pig_nose, cv2.COLOR_BGR2GRAY)
-                _, nose_mask = cv2.threshold(pig_nose_gray, 25, 255, cv2.THRESH_BINARY_INV)
-                # removing nose
-                no_nose = cv2.bitwise_and(nose_area, nose_area, mask=nose_mask)
-                # superimposing nose on no_nose
-                final_nose = cv2.add(no_nose, pig_nose)
-                # finally putting pig nose filter on original nose
-                image[
-                    top_left[1]: top_left[1]+nose_height,
-                    top_left[0]: top_left[0]+nose_width
-                ] = final_nose
+                # # creating nose mask
+                # pig_nose_gray = cv2.cvtColor(pig_nose, cv2.COLOR_BGR2GRAY)
+                # _, nose_mask = cv2.threshold(pig_nose_gray, 25, 255, cv2.THRESH_BINARY_INV)
+                # # removing nose
+                # no_nose = cv2.bitwise_and(nose_area, nose_area, mask=nose_mask)
+                # # superimposing nose on no_nose
+                # final_nose = cv2.add(no_nose, pig_nose)
+                # # finally putting pig nose filter on original nose
+                # image[
+                #     top_left[1]: top_left[1]+nose_height,
+                #     top_left[0]: top_left[0]+nose_width
+                # ] = final_nose
 
 
         cv2.imshow("filter", image)
