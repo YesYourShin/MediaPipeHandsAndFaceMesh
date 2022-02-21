@@ -48,7 +48,10 @@ function onResults(results) {
             text="손을 정확하게 인식시켜주세요.";
         }
         
-        console.log(text);
+        canvasCtx.font = "40px gulim"
+        canvasCtx.fillStyle = "rgba(255,255,255,1)"
+        canvasCtx.fillText("n번에게 투표하시겠습니까?", 50, 50);
+        canvasCtx.fillText(text, 50, 100);
 
     canvasCtx.restore();
     }
