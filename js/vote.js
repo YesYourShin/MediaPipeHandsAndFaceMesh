@@ -35,7 +35,10 @@ function onResults(results) {
                             {color: '#00FF00', lineWidth: 5});
             drawLandmarks(canvasCtx, landmarks, {color: '#FF0000', lineWidth: 2});
         }
-
+        canvasCtx.font = "40px gulim"
+        canvasCtx.fillStyle = "rgba(255,255,255,1)"
+        canvasCtx.fillText("죽이겠습니까?", 50, 50);
+        canvasCtx.fillText(text, 50, 100);
         console.log(text);
 
         
