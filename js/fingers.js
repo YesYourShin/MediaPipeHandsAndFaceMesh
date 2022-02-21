@@ -94,24 +94,26 @@ function onResults(results) {
 
             // draw.text((50, 50), text="몇 번을 지목하겠습니까?", font = font, fill=(255, 255, 255))
 
+            let recognitionError
+
             if (rightHandLandmarks.length > 0) {
                 if (rightHandLandmarks[0]['y'] < rightHandLandmarks[1]['y'] || (rightHandLandmarks[0]['y'] - rightHandLandmarks[5]['y'])/2 > rightHandLandmarks[0]['y'] - rightHandLandmarks[17]['y']) {
-                    // draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
+                    recognitionError = true;
                     text = "손을 정확하게 인식시켜주세요."
+
                 }
                     
             }
                 
             if (leftHandLandmarks.length > 0) {
                 if (leftHandLandmarks[0]['y'] < leftHandLandmarks[1]['y'] || (leftHandLandmarks[0]['y'] - leftHandLandmarks[5]['y'])/2 > leftHandLandmarks[0]['y'] - leftHandLandmarks[17]['y']) {
-
-                    // draw.text((50, 100), text="손을 정확하게 인식시켜주세요.", font = font, fill=(255, 255, 255))
+                    recognitionError = true;
                     text = "손을 정확하게 인식시켜주세요."
                 }
                 
             }
-                
-            if (rightHandLandmarks.length > 0 || leftHandLandmarks.length > 0) {
+            
+            if (!recognitionError && (rightHandLandmarks.length > 0 || leftHandLandmarks.length > 0)) {
                 rightFingersCount = 0
                 leftFingersCount = 0
 
@@ -144,9 +146,12 @@ function onResults(results) {
             }
         }
 
-        
-        
+        canvasCtx.font = "40px gulim"
+        canvasCtx.fillStyle = "rgba(255,255,255,1)"
+        canvasCtx.fillText("몇 번을 지목하겠습니까?", 50, 50);
+        canvasCtx.fillText(text, 50, 100);
         console.log(text);
+        
 
     canvasCtx.restore();
     }
