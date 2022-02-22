@@ -8,6 +8,12 @@ img.src = "mafia_hat.png";
 function onResults(results) {
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    // 기준점을 지정한 크기(x,y)만큼 평행이동함
+    canvasCtx.translate(canvasElement.width, 0);
+    // scale(x,y)
+    // x : 수평 방향의 배율. 음수 값은 수직 축에서 픽셀을 뒤집음
+    // y : 수직 방향의 배율. 음수 값은 가로 축에서 픽셀을 뒤집음
+    canvasCtx.scale(-1, 1);
     canvasCtx.drawImage(
         results.image, 0, 0, canvasElement.width, canvasElement.height);
     
@@ -68,9 +74,10 @@ function onResults(results) {
             //     console.log('lm : ' + lm)
             // }
         }
+        canvasCtx.restore();
     }
 
-    canvasCtx.restore();
+    
 }
 
 const faceMesh = new FaceMesh({locateFile: (file) => {

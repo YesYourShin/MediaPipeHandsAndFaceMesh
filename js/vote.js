@@ -5,6 +5,12 @@ const canvasCtx = canvasElement.getContext('2d');
 function onResults(results) {
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    // 기준점을 지정한 크기(x,y)만큼 평행이동함
+    canvasCtx.translate(canvasElement.width, 0);
+    // scale(x,y)
+    // x : 수평 방향의 배율. 음수 값은 수직 축에서 픽셀을 뒤집음
+    // y : 수직 방향의 배율. 음수 값은 가로 축에서 픽셀을 뒤집음
+    canvasCtx.scale(-1, 1);
     canvasCtx.drawImage(
         results.image, 0, 0, canvasElement.width, canvasElement.height);
     if (results.multiHandLandmarks) {
@@ -35,14 +41,13 @@ function onResults(results) {
                             {color: '#00FF00', lineWidth: 5});
             drawLandmarks(canvasCtx, landmarks, {color: '#FF0000', lineWidth: 2});
         }
+        canvasCtx.restore();
         canvasCtx.font = "40px gulim"
         canvasCtx.fillStyle = "rgba(255,255,255,1)"
         canvasCtx.fillText("죽이겠습니까?", 50, 50);
         canvasCtx.fillText(text, 50, 100);
         console.log(text);
-
         
-    canvasCtx.restore();
     }
 }
 
