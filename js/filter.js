@@ -6,6 +6,7 @@ var img = new Image();
 img.src = "mafia_hat.png";
 
 function onResults(results) {
+    
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     // 기준점을 지정한 크기(x,y)만큼 평행이동함
@@ -19,9 +20,19 @@ function onResults(results) {
     
     // canvasCtx.globalCompositeOperation = "source-over";
         
+        if (results.multiFaceLandmarks.length == 0) {
+            const canvasWidth = 400
+            const canvasHeight = 249
+            const canvasx = canvasElement.width / 2 - canvasWidth / 2;
+            const canvasy = canvasElement.height / 2 - canvasHeight / 2;
 
+            // console.log(canvasx)
+            img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+            
+        canvasCtx.restore();
+        }
 
-        if (results.multiFaceLandmarks) {
+        else if (results.multiFaceLandmarks) {
         for (const landmarks of results.multiFaceLandmarks) {
             drawConnectors(canvasCtx, landmarks, FACEMESH_TESSELATION,
                             {color: '#C0C0C070', lineWidth: 1});
@@ -33,7 +44,7 @@ function onResults(results) {
             drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_IRIS, {color: '#30FF30'});
             drawConnectors(canvasCtx, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
             drawConnectors(canvasCtx, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
-
+            
             let leftHeadx = 0;
             let leftHeady = 0;
             let rightHeadx = 0;
@@ -42,12 +53,12 @@ function onResults(results) {
 
                 for (let j = i ; j == i; j++) {
                     // 오른쪽 머리
-                    if ( i == 389) {
+                    if ( i == 162) {
                         rightHeadx = landmarks[i].x * canvasElement.width
                         rightHeady = landmarks[i].y * canvasElement.height
                     }
                     // 왼쪽 머리
-                    if ( i == 162) {
+                    if ( i == 389) {
                         leftHeadx = landmarks[i].x * canvasElement.width
                         leftHeady = landmarks[i].y * canvasElement.height
                     }
@@ -58,17 +69,38 @@ function onResults(results) {
             imgWidth = 1125
             imgHeight = 701
 
-            const canvasx = leftHeadx-((rightHeadx-leftHeadx)/2)
+            // if ((leftHeady > rightHeady ? leftHeady - rightHeady : rightHeady - leftHeady) > rightHeadx - leftHeadx) {
+            //     const canvasWidth = 400
+            //     const canvasHeight = 249
+            //     const canvasx = canvasElement.width / 2 - canvasWidth / 2;
+            //     const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+
+            //     // console.log(canvasx)
+            //     img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+            // }
+            if ((rightHeady > leftHeady ? rightHeady - leftHeady : leftHeady - rightHeady) > leftHeadx - rightHeadx) {
+                const canvasWidth = 400
+                const canvasHeight = 249
+                const canvasx = canvasElement.width / 2 - canvasWidth / 2;
+                const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+
+                // console.log(canvasx)
+                img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+            }
+            else {
+                // canvas x y는 화면상의 이미지 위치
+                // canvas Width Height는 이미지의 크기
+                const canvasx = rightHeadx - ((leftHeadx-rightHeadx)/2)
+                const canvasWidth = (leftHeadx-rightHeadx)*2 
+                const canvasHeight = (imgHeight / imgWidth) * canvasWidth
+                const canvasy = (rightHeady > leftHeady ? rightHeady-canvasHeight-(rightHeady - leftHeady) / 2 : rightHeady-canvasHeight+(leftHeady - rightHeady) / 2)
+
+                img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
             
-            console.log('leftHeadx: ' + leftHeadx + 'rightHeadx: ' + rightHeadx + 'canvasx: ' + canvasx)
+            
+            }
+            
 
-            const canvasWidth = (rightHeadx-leftHeadx)*2 
-            const canvasHeight = (imgHeight / imgWidth) * canvasWidth
-            const canvasy = (leftHeady > rightHeady ? leftHeady-canvasHeight-(leftHeady - rightHeady) / 2 : leftHeady-canvasHeight+(rightHeady - leftHeady) / 2)
-
-            img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
-
-                
             // for ((lm_id, lm) in landmarks) {
             //     console.log('lm_id : ' + lm_id)
             //     console.log('lm : ' + lm)
