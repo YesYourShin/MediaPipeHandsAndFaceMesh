@@ -25,6 +25,11 @@ function memo(job) {
         imgWidth = 1125
         imgHeight = 701
     }
+    else if (job == "none") {
+        img.src = ""
+        imgWidth = 0
+        imgHeight = 0
+    }
 }
 
 function onResults(results) {
