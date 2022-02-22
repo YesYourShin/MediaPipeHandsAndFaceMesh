@@ -69,22 +69,12 @@ function onResults(results) {
             imgWidth = 1125
             imgHeight = 701
 
-            // if ((leftHeady > rightHeady ? leftHeady - rightHeady : rightHeady - leftHeady) > rightHeadx - leftHeadx) {
-            //     const canvasWidth = 400
-            //     const canvasHeight = 249
-            //     const canvasx = canvasElement.width / 2 - canvasWidth / 2;
-            //     const canvasy = canvasElement.height / 2 - canvasHeight / 2;
-
-            //     // console.log(canvasx)
-            //     img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
-            // }
             if ((rightHeady > leftHeady ? rightHeady - leftHeady : leftHeady - rightHeady) > leftHeadx - rightHeadx) {
                 const canvasWidth = 400
                 const canvasHeight = 249
                 const canvasx = canvasElement.width / 2 - canvasWidth / 2;
                 const canvasy = canvasElement.height / 2 - canvasHeight / 2;
 
-                // console.log(canvasx)
                 img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
             }
             else {
@@ -100,16 +90,10 @@ function onResults(results) {
             
             }
             
-
-            // for ((lm_id, lm) in landmarks) {
-            //     console.log('lm_id : ' + lm_id)
-            //     console.log('lm : ' + lm)
-            // }
         }
         canvasCtx.restore();
     }
 
-    
 }
 
 const faceMesh = new FaceMesh({locateFile: (file) => {
