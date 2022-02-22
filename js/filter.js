@@ -3,7 +3,29 @@ const canvasElement = document.getElementsByClassName('output_canvas')[0];
 const canvasCtx = canvasElement.getContext('2d');
 videoElement.style.display='none'
 var img = new Image();
-img.src = "mafia_hat.png";
+img.src = '';
+imgWidth = 0;
+imgHeight = 0;
+
+function memo(job) {
+    if (job == "citizen") {
+        img.src = ""
+    }
+    else if (job == "police") {
+        img.src = ""
+    }
+    else if (job == "doctor") {
+        img.src = ""
+    }
+    else if (job == "soldier") {
+        img.src = ""
+    }
+    else if (job == "mafia") {
+        img.src = "mafia_hat.png"
+        imgWidth = 1125
+        imgHeight = 701
+    }
+}
 
 function onResults(results) {
     
@@ -65,9 +87,6 @@ function onResults(results) {
                 }
                 
             }
-
-            imgWidth = 1125
-            imgHeight = 701
 
             if ((rightHeady > leftHeady ? rightHeady - leftHeady : leftHeady - rightHeady) > leftHeadx - rightHeadx) {
                 const canvasWidth = 400
