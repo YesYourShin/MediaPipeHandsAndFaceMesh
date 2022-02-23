@@ -10,18 +10,26 @@ imgHeight = 0;
 function memo(job) {
     if (job == "citizen") {
         img.src = ""
+        imgWidth = 0
+        imgHeight = 0
     }
     else if (job == "police") {
-        img.src = ""
+        img.src = "image/police_hat.png"
+        imgWidth = 600
+        imgHeight = 451
     }
     else if (job == "doctor") {
-        img.src = ""
+        img.src = "image/doctor_hat.png"
+        imgWidth = 1000
+        imgHeight = 630
     }
     else if (job == "soldier") {
-        img.src = ""
+        img.src = "image/military_helmet.png"
+        imgWidth = 246
+        imgHeight = 250
     }
     else if (job == "mafia") {
-        img.src = "mafia_hat.png"
+        img.src = "image/mafia_hat.png"
         imgWidth = 1125
         imgHeight = 701
     }
@@ -92,28 +100,88 @@ function onResults(results) {
                 }
                 
             }
-
-            if ((rightHeady > leftHeady ? rightHeady - leftHeady : leftHeady - rightHeady) > leftHeadx - rightHeadx) {
-                const canvasWidth = 400
-                const canvasHeight = 249
-                const canvasx = canvasElement.width / 2 - canvasWidth / 2;
-                const canvasy = canvasElement.height / 2 - canvasHeight / 2;
-
-                img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+            
+            if (img.src.includes("mafia_hat.png")) {
+                if ((rightHeady > leftHeady ? rightHeady - leftHeady : leftHeady - rightHeady) > leftHeadx - rightHeadx) {
+                    const canvasWidth = 400
+                    const canvasHeight = 249
+                    const canvasx = canvasElement.width / 2 - canvasWidth / 2;
+                    const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+    
+                    img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+                }
+                else {
+                    // canvas x y는 화면상의 이미지 위치
+                    // canvas Width Height는 이미지의 크기
+                    const canvasx = rightHeadx - ((leftHeadx-rightHeadx)/2)
+                    const canvasWidth = (leftHeadx-rightHeadx)*2 
+                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth
+                    const canvasy = (rightHeady > leftHeady ? rightHeady-canvasHeight-(rightHeady - leftHeady) / 2 : rightHeady-canvasHeight+(leftHeady - rightHeady) / 2)
+    
+                    img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+                }
             }
-            else {
-                // canvas x y는 화면상의 이미지 위치
-                // canvas Width Height는 이미지의 크기
-                const canvasx = rightHeadx - ((leftHeadx-rightHeadx)/2)
-                const canvasWidth = (leftHeadx-rightHeadx)*2 
-                const canvasHeight = (imgHeight / imgWidth) * canvasWidth
-                const canvasy = (rightHeady > leftHeady ? rightHeady-canvasHeight-(rightHeady - leftHeady) / 2 : rightHeady-canvasHeight+(leftHeady - rightHeady) / 2)
-
-                img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
-            
-            
+            else if (img.src.includes("police_hat.png")) {
+                if ((rightHeady > leftHeady ? rightHeady - leftHeady : leftHeady - rightHeady) > leftHeadx - rightHeadx) {
+                    const canvasWidth = 400
+                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth
+                    const canvasx = canvasElement.width / 2 - canvasWidth / 2;
+                    const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+    
+                    img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+                }
+                else {
+                    // canvas x y는 화면상의 이미지 위치
+                    // canvas Width Height는 이미지의 크기
+                    const canvasx = rightHeadx - ((leftHeadx-rightHeadx)/2)
+                    const canvasWidth = (leftHeadx-rightHeadx)*2 
+                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth
+                    const canvasy = (rightHeady > leftHeady ? rightHeady-canvasHeight-(rightHeady - leftHeady) / 2 : rightHeady-canvasHeight+(leftHeady - rightHeady) / 2)
+    
+                    img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+                }
             }
-            
+            else if (img.src.includes("doctor_hat.png")) {
+                if ((rightHeady > leftHeady ? rightHeady - leftHeady : leftHeady - rightHeady) > leftHeadx - rightHeadx) {
+                    const canvasWidth = 400
+                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth
+                    const canvasx = canvasElement.width / 2 - canvasWidth / 2;
+                    const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+    
+                    img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+                }
+                else {
+                    // canvas x y는 화면상의 이미지 위치
+                    // canvas Width Height는 이미지의 크기
+                    const canvasx = rightHeadx - ((leftHeadx-rightHeadx)/2)
+                    const canvasWidth = (leftHeadx-rightHeadx)*2 
+                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth
+                    const canvasy = (rightHeady > leftHeady ? rightHeady-canvasHeight-(rightHeady - leftHeady) / 2 : rightHeady-canvasHeight+(leftHeady - rightHeady) / 2)
+    
+                    img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+                }
+            }
+            else if (img.src.includes("military_helmet.png")) {
+                if ((rightHeady > leftHeady ? rightHeady - leftHeady : leftHeady - rightHeady) > leftHeadx - rightHeadx) {
+                    const canvasWidth = 400
+                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth
+                    const canvasx = canvasElement.width / 2 - canvasWidth / 2;
+                    const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+    
+                    img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+                }
+                else {
+                    // canvas x y는 화면상의 이미지 위치
+                    // canvas Width Height는 이미지의 크기
+                    const canvasx = rightHeadx - ((leftHeadx-rightHeadx)/2)
+                    const canvasWidth = (leftHeadx-rightHeadx)*2 
+                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth
+                    // const canvasy = (rightHeady > leftHeady ? rightHeady-canvasHeight-(rightHeady - leftHeady) / 2 : rightHeady-canvasHeight+(leftHeady - rightHeady) / 2)
+                    const canvasy = (rightHeady > leftHeady ? rightHeady-(canvasHeight/2+canvasHeight/4)-(rightHeady - leftHeady) / 2 : leftHeady-(canvasHeight/2+canvasHeight/4)-(leftHeady - rightHeady) / 2)
+
+                    img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
+                }
+            }
         }
         canvasCtx.restore();
     }
