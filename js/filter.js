@@ -177,7 +177,7 @@ function onResults(results) {
                     const canvasWidth = (leftHeadx-rightHeadx)*2 
                     const canvasHeight = (imgHeight / imgWidth) * canvasWidth
                     // const canvasy = (rightHeady > leftHeady ? rightHeady-canvasHeight-(rightHeady - leftHeady) / 2 : rightHeady-canvasHeight+(leftHeady - rightHeady) / 2)
-                    const canvasy = (rightHeady > leftHeady ? rightHeady-(canvasHeight/2+canvasHeight/4)-(rightHeady - leftHeady) / 2 : leftHeady-(canvasHeight/2+canvasHeight/4)-(leftHeady - rightHeady) / 2)
+                    const canvasy = (rightHeady > leftHeady ? rightHeady-(canvasHeight/2+canvasHeight/5)-(rightHeady - leftHeady) / 2 : leftHeady-(canvasHeight/2+canvasHeight/5)-(leftHeady - rightHeady) / 2)
 
                     img.onload = canvasCtx.drawImage(img,canvasx,canvasy,canvasWidth,canvasHeight)
                 }
