@@ -78,6 +78,7 @@ with mp_face_mesh.FaceMesh(
                     # 해당 랜드마크의 비디오 화면 상 위치 값
                     h, w, c = image.shape
                     x, y = int(lm.x * w), int(lm.y * h)
+                    print(image.shape)
 
                     # # calculating nose width
                     # if lm_id == nose_landmarks[0]:
@@ -114,23 +115,23 @@ with mp_face_mesh.FaceMesh(
                 # top_left = (int(centernosex-nose_width/2),int(centernosey-nose_height/2))
                 # bottom_right = (int(centernosex+nose_width/2),int(centernosey+nose_height/2))
 
-                # nose_area = image[
-                #     top_left[1]: top_left[1]+nose_height,
-                #     top_left[0]: top_left[0]+nose_width
-                # ]
+                nose_area = image[
+                    top_left[1]: top_left[1]+nose_height,
+                    top_left[0]: top_left[0]+nose_width
+                ]
 
-                # # creating nose mask
-                # pig_nose_gray = cv2.cvtColor(pig_nose, cv2.COLOR_BGR2GRAY)
-                # _, nose_mask = cv2.threshold(pig_nose_gray, 25, 255, cv2.THRESH_BINARY_INV)
-                # # removing nose
-                # no_nose = cv2.bitwise_and(nose_area, nose_area, mask=nose_mask)
-                # # superimposing nose on no_nose
-                # final_nose = cv2.add(no_nose, pig_nose)
-                # # finally putting pig nose filter on original nose
-                # image[
-                #     top_left[1]: top_left[1]+nose_height,
-                #     top_left[0]: top_left[0]+nose_width
-                # ] = final_nose
+                # creating nose mask
+                pig_nose_gray = cv2.cvtColor(pig_nose, cv2.COLOR_BGR2GRAY)
+                _, nose_mask = cv2.threshold(pig_nose_gray, 25, 255, cv2.THRESH_BINARY_INV)
+                # removing nose
+                no_nose = cv2.bitwise_and(nose_area, nose_area, mask=nose_mask)
+                # superimposing nose on no_nose
+                final_nose = cv2.add(no_nose, pig_nose)
+                # finally putting pig nose filter on original nose
+                image[
+                    top_left[1]: top_left[1]+nose_height,
+                    top_left[0]: top_left[0]+nose_width
+                ] = final_nose
 
 
         cv2.imshow("filter", image)
