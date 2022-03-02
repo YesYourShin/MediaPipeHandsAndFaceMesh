@@ -55,10 +55,13 @@ function onResults(results) {
     // canvasCtx.globalCompositeOperation = "source-over";
 
     if (results.multiFaceLandmarks.length == 0) {
-        const canvasWidth = 400;
-        const canvasHeight = 249;
+        // canvas x y는 화면상의 이미지 위치
+        // canvas Width Height는 이미지의 크기
+        const canvasWidth = canvasElement.width / 3;
+        const canvasHeight = canvasElement.height / 3;
         const canvasx = canvasElement.width / 2 - canvasWidth / 2;
-        const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+        // const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+        const canvasy = 0;
 
         // console.log(canvasx)
         img.onload = canvasCtx.drawImage(
@@ -177,7 +180,6 @@ function onResults(results) {
                             : rightHeady -
                               canvasHeight +
                               (leftHeady - rightHeady) / 2;
-
                     img.onload = canvasCtx.drawImage(
                         img,
                         canvasx,
