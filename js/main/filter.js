@@ -112,10 +112,10 @@ function onResults(results) {
                         : leftHeady - rightHeady) >
                     leftHeadx - rightHeadx
                 ) {
-                    const canvasWidth = 400;
-                    const canvasHeight = 249;
+                    const canvasWidth = canvasElement.width / 2;
+                    const canvasHeight = canvasElement.height / 2;
                     const canvasx = canvasElement.width / 2 - canvasWidth / 2;
-                    const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+                    const canvasy = 0;
 
                     img.onload = canvasCtx.drawImage(
                         img,
@@ -154,10 +154,10 @@ function onResults(results) {
                         : leftHeady - rightHeady) >
                     leftHeadx - rightHeadx
                 ) {
-                    const canvasWidth = 400;
-                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth;
+                    const canvasWidth = canvasElement.width / 2;
+                    const canvasHeight = canvasElement.height / 2;
                     const canvasx = canvasElement.width / 2 - canvasWidth / 2;
-                    const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+                    const canvasy = 0;
 
                     img.onload = canvasCtx.drawImage(
                         img,
@@ -195,10 +195,10 @@ function onResults(results) {
                         : leftHeady - rightHeady) >
                     leftHeadx - rightHeadx
                 ) {
-                    const canvasWidth = 400;
-                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth;
+                    const canvasWidth = canvasElement.width / 2;
+                    const canvasHeight = canvasElement.height / 2;
                     const canvasx = canvasElement.width / 2 - canvasWidth / 2;
-                    const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+                    const canvasy = 0;
 
                     img.onload = canvasCtx.drawImage(
                         img,
@@ -237,10 +237,10 @@ function onResults(results) {
                         : leftHeady - rightHeady) >
                     leftHeadx - rightHeadx
                 ) {
-                    const canvasWidth = 400;
-                    const canvasHeight = (imgHeight / imgWidth) * canvasWidth;
+                    const canvasWidth = canvasElement.width / 2;
+                    const canvasHeight = canvasElement.height / 2;
                     const canvasx = canvasElement.width / 2 - canvasWidth / 2;
-                    const canvasy = canvasElement.height / 2 - canvasHeight / 2;
+                    const canvasy = 0;
 
                     img.onload = canvasCtx.drawImage(
                         img,
