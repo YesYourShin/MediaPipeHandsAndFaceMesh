@@ -57,8 +57,8 @@ function onResults(results) {
     if (results.multiFaceLandmarks.length == 0) {
         // canvas x y는 화면상의 이미지 위치
         // canvas Width Height는 이미지의 크기
-        const canvasWidth = canvasElement.width / 3;
-        const canvasHeight = canvasElement.height / 3;
+        const canvasWidth = canvasElement.width / 2;
+        const canvasHeight = canvasElement.height / 2;
         const canvasx = canvasElement.width / 2 - canvasWidth / 2;
         // const canvasy = canvasElement.height / 2 - canvasHeight / 2;
         const canvasy = 0;
