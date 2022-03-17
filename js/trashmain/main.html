@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script defer language="javascript" type="text/javascript" src="filter.js"></script>
+
+        
+    
+</head>
+<body>
+    <div class="container">
+        <video class="input_video" src="face_video.mp4" controls autoplay loop></video>
+        <video class="input_video2" controls autoplay loop></video>
+        <canvas class="canvasmemo1" width="640px" height="480px"></canvas>
+        <canvas class="canvasmemo2" width="640px" height="480px"></canvas>
+
+
+        <input type="checkbox" id="checkbox1" onclick="fingersResults(this)"/>지목</label>
+            <input type="checkbox" id="checkbox2" onclick="checkResults(this)"/>지목확인</label>
+            <input type="checkbox" id="checkbox3" onclick="voteResults(this)"/>찬반투표</label>
+
+        
+        <input type="button" id="button5" onclick="memo('citizen')" value="시민" />
+        <input type="button" id="button6" onclick="memo('police')" value="경찰" />
+        <input type="button" id="button7" onclick="memo('doctor')" value="의사" />
+        <input type="button" id="button8" onclick="memo('soldier')" value="군인" />
+        <input type="button" id="button9" onclick="memo('mafia')" value="마피아" />
+        <input type="button" id="button10" onclick="memo('none')" value="메모삭제" />
+    </div>
+
+</body>
+</html>

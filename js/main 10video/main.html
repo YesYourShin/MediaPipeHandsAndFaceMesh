@@ -18,106 +18,149 @@
             src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"
             crossorigin="anonymous"
         ></script>
-        <!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script> -->
+        <!-- <script
+            src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+            crossorigin="anonymous"
+        ></script> -->
         <script
             defer
             language="javascript"
             type="text/javascript"
             src="filter.js"
         ></script>
-        <script
+
+        <!-- <script
             defer
             language="javascript"
             type="text/javascript"
-            src="filter2.js"
-        ></script>
-
-        <!-- <script defer language="javascript" type="text/javascript" src="hands.js"></script> -->
+            src="hands.js"
+        ></script> -->
     </head>
     <body>
-        <div class="container">
+        <!-- <div class="container">
             <video class="input_video"></video>
-
             <canvas class="output_canvas" width="640px" height="480px"></canvas>
             <input
                 type="button"
                 id="button1"
-                onclick="memo1('citizen')"
+                onclick="memo('citizen')"
                 value="시민"
             />
             <input
                 type="button"
                 id="button2"
-                onclick="memo1('police')"
+                onclick="memo('police')"
                 value="경찰"
             />
             <input
                 type="button"
                 id="button3"
-                onclick="memo1('doctor')"
+                onclick="memo('doctor')"
                 value="의사"
             />
             <input
                 type="button"
                 id="button4"
-                onclick="memo1('soldier')"
+                onclick="memo('soldier')"
                 value="군인"
             />
             <input
                 type="button"
                 id="button5"
-                onclick="memo1('mafia')"
+                onclick="memo('mafia')"
                 value="마피아"
             />
             <input
                 type="button"
                 id="button6"
-                onclick="memo1('none')"
+                onclick="memo('none')"
                 value="메모삭제"
-            />
+            /> -->
 
-            <video class="input_video2"></video>
-            <canvas class="output_canvas2" width="640px" height="480px"></canvas
-            >>
+            <!-- <video class="input_video2"></video>
+            <canvas
+                class="output_canvas2"
+                width="640px"
+                height="480px"
+            ></canvas>
             <input
                 type="button"
                 id="button7"
-                onclick="memo2('citizen')"
+                onclick="memo('citizen')"
                 value="시민"
             />
             <input
                 type="button"
                 id="button8"
-                onclick="memo2('police')"
+                onclick="memo('police')"
                 value="경찰"
             />
             <input
                 type="button"
                 id="button9"
-                onclick="memo2('doctor')"
+                onclick="memo('doctor')"
                 value="의사"
             />
             <input
                 type="button"
                 id="button10"
-                onclick="memo2('soldier')"
+                onclick="memo('soldier')"
                 value="군인"
             />
             <input
                 type="button"
                 id="button11"
-                onclick="memo2('mafia')"
+                onclick="memo('mafia')"
                 value="마피아"
             />
             <input
                 type="button"
                 id="button12"
-                onclick="memo2('none')"
+                onclick="memo('none')"
                 value="메모삭제"
-            />
+            /> -->
+
             <!-- <input type="checkbox" id="checkbox1" onclick="fingersResults(this)"/>지목</label>
             <input type="checkbox" id="checkbox2" onclick="checkResults(this)"/>지목확인</label>
             <input type="checkbox" id="checkbox3" onclick="voteResults(this)"/>찬반투표</label> -->
         </div>
+
+        <script>
+            for (i = 0; i < 10; i++) {
+                document.write(
+                    "<div class=container" + i + ">",
+                    "<video class=input_video" + i + "></video>",
+                    "<canvas class=output_canvas" +
+                        i +
+                        " width=640px height=480px></canvas>",
+                    "<input type=button id=button" +
+                        i +
+                        " onclick=memo" +
+                        "('citizen') value='시민' />",
+                    "<input type=button id=button" +
+                        i +
+                        " onclick=memo" +
+                        "('police') value='경찰' />",
+                    "<input type=button id=button" +
+                        i +
+                        " onclick=memo" +
+                        "('doctor') value='의사' />",
+                    "<input type=button id=button" +
+                        i +
+                        " onclick=memo" +
+                        "('soldier') value='군인' />",
+                    "<input type=button id=button" +
+                        i +
+                        " onclick=memo" +
+                        "('mafia') value='마피아' />",
+                    "<input type=button id=button" +
+                        i +
+                        " onclick=memo" +
+                        "('none') value='메모삭제' />",
+
+                    "</div>"
+                );
+            }
+        </script>
     </body>
 </html>
