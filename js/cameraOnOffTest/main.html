@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+        <script defer language="javascript" type="text/javascript" src="filter.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <video class="input_video" src="face_video.mp4" controls autoplay loop></video>
+            <canvas class="canvasmemo1" width="640px" height="480px"></canvas>
+
+            <input type="button" id="button11" onclick="cameraOff()" value="카메라 off" />
+            <input type="button" id="button11" onclick="cameraOn()" value="카메라 on" />
+        </div>
+    </body>
+</html>
