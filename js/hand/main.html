@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+        <!-- Require the peer dependencies of face-detection. -->
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+
+        <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection"></script>
+    </head>
+    <body>
+        <div class="container">
+            <video class="input_video" controls autoplay loop></video>
+            <canvas class="output_canvas" width="640px" height="480px"></canvas>
+            <canvas class="output_canvas2" width="640px" height="480px"></canvas>
+        </div>
+    </body>
+</html>
